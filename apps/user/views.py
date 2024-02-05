@@ -1,3 +1,4 @@
+from allauth.socialaccount.models import SocialAccount
 from django.contrib.auth.views import LoginView
 from django.core.handlers.wsgi import WSGIRequest
 from django.urls import reverse_lazy
@@ -7,7 +8,7 @@ from .forms import UserLoginForm, UserRegistrationForm
 from django.views.generic import CreateView, TemplateView
 
 from common.mixins import TitleMixin
-from .models import User
+from .models import TelegramUser, User
 
 
 class UserLoginView(TitleMixin, LoginView):
@@ -15,11 +16,6 @@ class UserLoginView(TitleMixin, LoginView):
     form_class = UserLoginForm
     success_url = reverse_lazy('index')
     template_name = 'login.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['success_url'] = self.success_url
-        return context
 
 
 class UserRegistrationCreateView(TitleMixin, CreateView):
@@ -35,7 +31,13 @@ class UserProfileView(TitleMixin, TemplateView):
     template_name = 'index.html'
 
     def dispatch(self, request: WSGIRequest, *args, **kwargs):
-        dump(request)
-        if not request.user.is_authenticated:
-            return reverse_lazy('user:login')
+        # TODO: подивитися як перенаправити кол бек на іншу силку саме при телеграм авторизації там додавати запис в бд
+        social_user = SocialAccount.objects.get(user=request.user)
+        TelegramUser.objects.get_or_create(
+            telegram_id=social_user.uid,
+            username=social_user.extra_data.get('username', ''),
+            first_name=social_user.extra_data.get('first_name', ''),
+            last_name=social_user.extra_data.get('last_name', ''),
+            lang=social_user.extra_data.get('lang', '')
+        )
         return super().dispatch(request, *args, **kwargs)
