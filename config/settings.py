@@ -29,7 +29,7 @@ SECRET_KEY = env.str('DJANGO_SECRET_KEY')
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['*'])
-
+CSRF_TRUSTED_ORIGINS = env.list('DJANGO_CSRF_TRUSTED_ORIGINS', default=[])
 
 # Application definition
 
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.telegram',
+    'django_dump_die',
     # Local apps
     'apps.user',
 ]
@@ -58,6 +59,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+    'django_dump_die.middleware.DumpAndDieMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -80,7 +82,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -88,13 +89,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env.str('DATABASE_NAME'),
-        'USER': env.str('DATABASE_USER'), 
+        'USER': env.str('DATABASE_USER'),
         'PASSWORD': env.str('DATABASE_PASSWORD'),
         'HOST': env.str('DATABASE_HOST'),
         'PORT': env.int('DATABASE_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -114,7 +114,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -125,7 +124,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -165,6 +163,9 @@ LOGGING = {
 
 # Custom user model
 AUTH_USER_MODEL = 'user.User'
+LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -173,9 +174,10 @@ AUTHENTICATION_BACKENDS = [
 
 SOCIALACCOUNT_PROVIDERS = {
     'telegram': {
+        'TOKEN': env.str('TELEGRAM_BOT_TOKEN'),
         'APP': {
-            'client_id': '6863959204',
-            'secret': '6863959204:AAHB1M--O4p25oa42MOonb6dhYCXYAZGpqo',
+            'client_id': env.str('TELEGRAM_BOT_ID'),
+            'secret': env.str('TELEGRAM_BOT_TOKEN'),
         },
         'AUTH_PARAMS': {'auth_date_validity': 30},
     }
