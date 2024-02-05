@@ -3,7 +3,7 @@ services:
     build: .
     volumes:
       - .:/app
-      - static:/app/staticfiles
+      - static:/app/static
       - media:/app/media
     env_file:
       - .env
@@ -11,6 +11,8 @@ services:
       DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
       DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
       DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
+    depends_on:
+      - postgres
 
   postgres:
     image: postgres:latest
@@ -33,7 +35,7 @@ services:
       - "443:443"
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
-      - static:/app/staticfiles
+      - static:/app/static
       - media:/app/media
     depends_on:
       - server
