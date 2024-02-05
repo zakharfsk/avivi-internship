@@ -1,5 +1,7 @@
 from django.contrib.auth.views import LoginView
+from django.core.handlers.wsgi import WSGIRequest
 from django.urls import reverse_lazy
+from django_dump_die.middleware import dd, dump
 
 from .forms import UserLoginForm, UserRegistrationForm
 from django.views.generic import CreateView, TemplateView
@@ -31,3 +33,9 @@ class UserRegistrationCreateView(TitleMixin, CreateView):
 class UserProfileView(TitleMixin, TemplateView):
     title = 'Профіль'
     template_name = 'index.html'
+
+    def dispatch(self, request: WSGIRequest, *args, **kwargs):
+        dump(request)
+        if not request.user.is_authenticated:
+            return reverse_lazy('user:login')
+        return super().dispatch(request, *args, **kwargs)
