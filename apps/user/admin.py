@@ -68,13 +68,22 @@ class TelegramUserAdmin(admin.ModelAdmin):
         "username",
         "first_name",
         "last_name",
+        "lang",
         "date_created",
         "date_updated",
     )
     list_display_links = ("id", "telegram_id")
-    search_fields = ("telegram_id", "username", )
+    search_fields = ("telegram_id", "username",)
     ordering = ("username",)
-    readonly_fields = ("date_created", "date_updated", "telegram_id")
+    readonly_fields = (
+        "date_created",
+        "date_updated",
+        "telegram_id",
+        "username",
+        "first_name",
+        "last_name",
+        "lang"
+    )
     fieldsets = (
         (
             None,
@@ -84,6 +93,7 @@ class TelegramUserAdmin(admin.ModelAdmin):
                     "username",
                     "first_name",
                     "last_name",
+                    "lang",
                 )
             },
         ),
