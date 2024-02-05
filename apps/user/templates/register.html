@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load socialaccount %}
+{% load static %}
+{% block content %}
+    {% if form.errors %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert"
+             style="margin-top: 50px;">
+            {{ form.errors }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    {% endif %}
+    <form method="post" action="{% url 'user:register' %}">
+        {% csrf_token %}
+        <img class="mb-4" src="{% static 'img/bootstrap-logo.svg' %}" alt="" width="72" height="57">
+        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+        <div class="form-floating mb-1">
+            {{ form.first_name }}
+            <label for="{{ form.first_name.id_for_label }}">First name</label>
+        </div>
+        <div class="form-floating mb-1">
+            {{ form.last_name }}
+            <label for="{{ form.last_name.id_for_label }}">Last name</label>
+        </div>
+        <div class="form-floating mb-1">
+            {{ form.username }}
+            <label for="{{ form.username.id_for_label }}">Username</label>
+        </div>
+        <div class="form-floating mb-1">
+            {{ form.email }}
+            <label for="{{ form.email.id_for_label }}">Email</label>
+        </div>
+        <div class="form-floating mb-1">
+            {{ form.password1 }}
+            <label for="{{ form.password1.id_for_label }}">Password</label>
+        </div>
+        <div class="form-floating mb-1">
+            {{ form.password2 }}
+            <label for="{{ form.password2.id_for_label }}">Retype password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+            <a href="{% provider_login_url 'telegram' %}">
+                <i class="fab fa-telegram fa-2x" style="color: #d9503e;"></i>
+            </a>
+        </div>
+        <div class="checkbox mb-3">
+            <a href="{% url 'user:login' %}" class="w-100 btn btn-lg btn-primary">Sign in</a>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+    </form>
+{% endblock %}
