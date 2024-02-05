@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import User
+from .models import User, TelegramUser
+
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -56,4 +57,35 @@ class UserAdmin(admin.ModelAdmin):
             },
         ),
         ("Important dates", {"fields": ("last_login", "date_joined")}),
+    )
+
+
+@admin.register(TelegramUser)
+class TelegramUserAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "telegram_id",
+        "username",
+        "first_name",
+        "last_name",
+        "date_created",
+        "date_updated",
+    )
+    list_display_links = ("id", "telegram_id")
+    search_fields = ("telegram_id", "username", )
+    ordering = ("username",)
+    readonly_fields = ("date_created", "date_updated", "telegram_id")
+    fieldsets = (
+        (
+            None,
+            {
+                "fields": (
+                    "telegram_id",
+                    "username",
+                    "first_name",
+                    "last_name",
+                )
+            },
+        ),
+        ("Important dates", {"fields": ("date_created", "date_updated")}),
     )
