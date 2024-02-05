@@ -1,6 +1,7 @@
 version: '3.9'
 services:
   server:
+    container_name: server
     build: .
     volumes:
       - .:/app
@@ -30,10 +31,8 @@ services:
       - .env
 
   nginx:
+    container_name: nginx
     image: nginx:latest
-    ports:
-      - "80:80"
-      - "443:443"
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
       - static:/app/static
@@ -42,6 +41,24 @@ services:
       - server
     restart: unless-stopped
 
+  ngrok:
+    container_name: ngrok
+    image: ngrok/ngrok:latest
+    depends_on:
+      - server
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command:
+      - "start"
+      - "--all"
+      - "--config"
+      - "/etc/ngrok.yml"
+    volumes:
+      - ./ngrok.yml:/etc/ngrok.yml
+      - static:/app/static
+      - media:/app/media
+    ports:
+      - "4040:4040"
 
 volumes:
   static:
