@@ -13,12 +13,8 @@
             {% else %}
                 {{ form.non_field_errors }}
             {% endif %}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
         </div>
     {% endif %}
-    {{ success_url }}
     <form method="post" action="{% url 'user:login' %}">
         {% csrf_token %}
         <img class="mb-4" src="{% static 'img/bootstrap-logo.svg' %}" alt="" width="72" height="57">
