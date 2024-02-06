@@ -35,6 +35,6 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-RUN chmod +x /app/entrypoints/docker-entrypont.sh
+RUN chmod +x /app/entrypoints/docker-entrypoint.sh
 
 ENTRYPOINT ["/bin/sh", "/app/entrypoints/docker-entrypont.sh" ]

@@ -2,9 +2,11 @@ version: '3.9'
 services:
   server:
     container_name: server
+    entrypoint: '/app/entrypoints/docker-entrypoint.sh'
+    restart: always
     build: .
     volumes:
-      - .:/app
+      - ./:/app
       - ./templates:/app/templates
       - ./static:/app/static
       - media:/app/media
@@ -34,6 +36,8 @@ services:
   nginx:
     container_name: nginx
     image: nginx:latest
+    ports:
+      - "80:80"
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
       - ./static:/app/static
@@ -41,25 +45,6 @@ services:
     depends_on:
       - server
     restart: unless-stopped
-
-  ngrok:
-    container_name: ngrok
-    image: ngrok/ngrok:latest
-    depends_on:
-      - server
-    environment:
-      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
-    command:
-      - "start"
-      - "--all"
-      - "--config"
-      - "/etc/ngrok.yml"
-    volumes:
-      - ./ngrok.yml:/etc/ngrok.yml
-      - static:/app/static
-      - media:/app/media
-    ports:
-      - "4040:4040"
 
 volumes:
   static:
