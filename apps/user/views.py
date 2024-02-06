@@ -7,7 +7,7 @@ from django_dump_die.middleware import dd, dump
 from .forms import UserLoginForm, UserRegistrationForm
 from django.views.generic import CreateView, TemplateView
 
-from common.mixins import TitleMixin
+from common.mixins import TelegramUserMixin, TitleMixin
 from .models import TelegramUser, User
 
 
@@ -15,7 +15,7 @@ class UserLoginView(TitleMixin, LoginView):
     title = 'Авторизація'
     form_class = UserLoginForm
     success_url = reverse_lazy('index')
-    template_name = 'login.html'
+    template_name = 'user/login.html'
 
 
 class UserRegistrationCreateView(TitleMixin, CreateView):
@@ -23,21 +23,24 @@ class UserRegistrationCreateView(TitleMixin, CreateView):
     model = User
     form_class = UserRegistrationForm
     success_url = reverse_lazy('user:login')
-    template_name = 'register.html'
+    template_name = 'user/register.html'
 
 
-class UserProfileView(TitleMixin, TemplateView):
+class UserProfileView(TitleMixin, TelegramUserMixin, TemplateView):
     title = 'Профіль'
-    template_name = 'index.html'
+    tg_user = None
+    template_name = 'user/index.html'
 
     def dispatch(self, request: WSGIRequest, *args, **kwargs):
-        # TODO: подивитися як перенаправити кол бек на іншу силку саме при телеграм авторизації там додавати запис в бд
-        social_user = SocialAccount.objects.get(user=request.user)
-        TelegramUser.objects.get_or_create(
-            telegram_id=social_user.uid,
-            username=social_user.extra_data.get('username', ''),
-            first_name=social_user.extra_data.get('first_name', ''),
-            last_name=social_user.extra_data.get('last_name', ''),
-            lang=social_user.extra_data.get('lang', '')
-        )
+        dd(request)
+        if request.session.get('account_authentication_methods')[0].get('provider') == 'telegram':
+            print('telegram')
+            social_user = SocialAccount.objects.get(user=request.user)
+            TelegramUser.objects.get_or_create(
+                telegram_id=social_user.uid,
+                username=social_user.extra_data.get('username', ''),
+                first_name=social_user.extra_data.get('first_name', ''),
+                last_name=social_user.extra_data.get('last_name', ''),
+                lang=social_user.extra_data.get('lang', '')
+            )
         return super().dispatch(request, *args, **kwargs)

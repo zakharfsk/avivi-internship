@@ -5,7 +5,8 @@ services:
     build: .
     volumes:
       - .:/app
-      - static:/app/static
+      - ./templates:/app/templates
+      - ./static:/app/static
       - media:/app/media
     env_file:
       - .env
@@ -35,7 +36,7 @@ services:
     image: nginx:latest
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
-      - static:/app/static
+      - ./static:/app/static
       - media:/app/media
     depends_on:
       - server

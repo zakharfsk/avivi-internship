@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 {% load socialaccount %}
 {% load static %}
+
+{% block stylesheets %}
+    <link href="{% static 'css/auth.css' %}" rel="stylesheet">
+{% endblock %}
+
+
 {% block content %}
     {% if form.errors %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert"
@@ -43,7 +49,7 @@
 
         <div class="checkbox mb-3">
             <a href="{% provider_login_url 'telegram' %}">
-                <i class="fab fa-telegram fa-2x" style="color: #d9503e;"></i>
+                <i class="fab fa-telegram fa-2x" style="color: black"></i>
             </a>
         </div>
         <div class="checkbox mb-3">
