@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block extra_navbar_components %}
+    <div class="text-end">
+        {% if user|has_group:"manager" %}
+            <a href="{% url 'user:tg_users_create' %}" class="btn btn-light text-dark me-2">Add telegram user</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h1>Confirm Delete</h1>
+    <p>Are you sure you want to delete "{{ object.pk }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a href="{% url 'user:tg_users' %}" class="btn btn-danger">Cancel</a>
+    </form>
+{% endblock content %}
