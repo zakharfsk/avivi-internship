@@ -39,8 +39,8 @@ ADD docker-entrypoint.sh /docker-entrypoint.sh
 
 RUN chmod a+x /docker-entrypoint.sh
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["bash", "-e", "/docker-entrypoint.sh"]
 
-RUN extra_files=$(find /app/templates -name "*.html" -exec printf -- "--reload-extra-file {} " \;)
-
-CMD gunicorn 'config.wsgi' --bind=0.0.0.0:8000 --reload --reload-engine=poll $extra_files
+#RUN extra_files=$(find /app/templates -name "*.html" -exec printf -- "--reload-extra-file {} " \;)
+#
+#CMD gunicorn 'config.wsgi' --bind=0.0.0.0:8000 --reload $extra_files
