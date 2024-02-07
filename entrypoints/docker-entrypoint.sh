@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 echo "Migrate..."
 python manage.py migrate --noinput
