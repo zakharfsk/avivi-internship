@@ -2,7 +2,6 @@ version: '3.9'
 services:
   server:
     container_name: server
-    entrypoint: "/app/entrypoints/docker-entrypoint.sh"
     restart: always
     build: .
     volumes:

@@ -35,6 +35,12 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-RUN chmod +x /app/entrypoints/docker-entrypoint.sh
+ADD docker-entrypoint.sh /docker-entrypoint.sh
 
-ENTRYPOINT ["/app/entrypoints/docker-entrypoint.sh"]
+RUN chmod a+x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+RUN extra_files=$(find /app/templates -name "*.html" -exec printf -- "--reload-extra-file {} " \;)
+
+CMD gunicorn 'config.wsgi' --bind=0.0.0.0:8000 --reload --reload-engine=poll $extra_files
