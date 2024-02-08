@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block extra_navbar_components %}
+    <div class="text-end">
+        <a href="{% url 'telegram_bot:telegram_bots_create' %}" class="btn btn-light text-dark me-2">Add telegram
+            bot</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <h1>Confirm Delete</h1>
+    <p>Are you sure you want to delete "{{ object.pk }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a href="{% url 'telegram_bot:telegram_bots' %}" class="btn btn-danger">Cancel</a>
+    </form>
+{% endblock content %}

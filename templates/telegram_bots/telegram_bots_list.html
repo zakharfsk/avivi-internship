@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block extra_navbar_components %}
+    <div class="text-end">
+        <a href="{% url 'telegram_bot:telegram_bots_create' %}" class="btn btn-light text-dark me-2">Add telegram
+            bot</a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% for telegrambot in telegrambot_list %}
+        <div class="page-content page-container" id="page-content">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="row container d-flex justify-content-center">
+                    <div class="col-xl-6 col-md-12">
+                        <div class="card user-card-full">
+                            <div class="row m-l-0 m-r-0">
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Bot name</p>
+                                            <h6 class="text-muted f-w-400">
+                                                {{ telegrambot.name }}
+                                            </h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Bot username</p>
+                                            <h6 class="text-muted f-w-400">
+                                                {{ telegrambot.username }}
+                                            </h6>
+                                        </div>
+                                        <p class="m-b-10 f-w-600">Bot token</p>
+                                        <h6 class="text-muted f-w-400">
+                                            {{ telegrambot.token }}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Operation</h6>
+                                    <div class="d-flex justify-content-around">
+                                        <div>
+                                            <a href="{% url 'telegram_bot:telegram_bots_detail' telegrambot.pk %}"
+                                               class="m-b-10 f-w-600">Detail</a>
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'telegram_bot:telegram_bots_update' telegrambot.pk %}"
+                                               class="m-b-10 f-w-600">Update</a>
+                                        </div>
+                                        <div>
+                                            <a href="{% url 'telegram_bot:telegram_bots_delete' telegrambot.pk %}"
+                                               class="m-b-10 f-w-600">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                {% for page in paginator.page_range %}
+                    <li class="page-item"><a class="page-link"
+                                             href="{% url 'telegram_bot:telegram_bots_paginator' page %}">{{ page }}</a></li>
+                {% endfor %}
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}

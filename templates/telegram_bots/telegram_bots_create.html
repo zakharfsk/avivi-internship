@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block extra_navbar_components %}
+    <div class="text-end">
+        <a href="{% url 'telegram_bot:telegram_bots_create' %}" class="btn btn-light text-dark me-2">Add telegram
+            bot</a>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'telegram_bot:telegram_bots_create' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}
