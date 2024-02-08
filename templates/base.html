@@ -27,6 +27,18 @@
                             Telegram User
                         </a>
                     </li>
+                    {% if user.is_superuser %}
+                        <li>
+                            <a href="{% url 'telegram_bot:telegram_bots' %}" class="nav-link text-white">
+                                Telegram Bots
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'admin:index' %}" class="nav-link text-white">
+                                Admin Panel
+                            </a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
