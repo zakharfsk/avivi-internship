@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
@@ -10,6 +12,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from apps.telegram_bot.forms import TelegramBotForm
 from apps.telegram_bot.models import TelegramBot
+from apps.user.models import TelegramUser
 from common.mixins import SuperUserRequiredMixin, TitleMixin
 
 
@@ -51,7 +54,17 @@ class TelegramBotDeleteView(TitleMixin, LoginRequiredMixin, SuperUserRequiredMix
 
 @csrf_exempt
 def telegram_bot_webhook_view(request: WSGIRequest):
-    print(request.body.decode('utf-8'))
+    bot_body = json.loads(request.body.decode('utf-8'))
+
+    if bot_body['message']['text'] == '/start':
+        TelegramUser.objects.get_or_create(
+            telegram_id=bot_body['message']['from']['id'],
+            username=bot_body['message']['from'].get('username', ''),
+            first_name=bot_body['message']['from']['first_name'],
+            last_name=bot_body['message']['from'].get('last_name', ''),
+            lang=bot_body['message']['from']['language_code']
+        )
+
     return JsonResponse({'status': 'ok'})
 
 
