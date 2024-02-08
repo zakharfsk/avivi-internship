@@ -11,10 +11,10 @@ urlpatterns = [
 
     path('profile/', views.UserProfileView.as_view(), name='profile'),
 
-    path('tg_users/', views.ListTelegramUserListView.as_view(), name='tg_users'),
-    path('tg_users/page/<int:page>/', views.ListTelegramUserListView.as_view(), name='tg_users_paginator'),
-    path('tg_users/create/', views.CreateTelegramUserCreateView.as_view(), name='tg_users_create'),
-    path('tg_users/<int:pk>/', views.DetailTelegramUserDetailView.as_view(), name='tg_users_detail'),
-    path('tg_users/<int:pk>/update/', views.UpdateTelegramUserUpdateView.as_view(), name='tg_users_update'),
-    path('tg_users/<int:pk>/delete/', views.DeleteTelegramUserDeleteView.as_view(), name='tg_users_delete'),
+    path('tg_users/', views.TelegramUserListView.as_view(), name='tg_users'),
+    path('tg_users/page/<int:page>/', views.TelegramUserListView.as_view(), name='tg_users_paginator'),
+    path('tg_users/create/', views.TelegramUserCreateView.as_view(), name='tg_users_create'),
+    path('tg_users/<int:pk>/', views.TelegramUserDetailView.as_view(), name='tg_users_detail'),
+    path('tg_users/<int:pk>/update/', views.TelegramUserUpdateView.as_view(), name='tg_users_update'),
+    path('tg_users/<int:pk>/delete/', views.TelegramUserDeleteView.as_view(), name='tg_users_delete'),
 ]
