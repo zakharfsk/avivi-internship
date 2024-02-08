@@ -18,3 +18,11 @@ class GroupRequiredMixin:
             return super(GroupRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
             return HttpResponseForbidden('Forbidden. You are not in the group required.')
+
+
+class SuperUserRequiredMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_superuser:
+            return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
+        else:
+            return HttpResponseForbidden('Forbidden. You are not a superuser.')
