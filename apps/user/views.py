@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 
@@ -23,26 +24,26 @@ class UserRegistrationCreateView(TitleMixin, CreateView):
     template_name = 'user/auth/register.html'
 
 
-class UserProfileView(TitleMixin, TemplateView):
+class UserProfileView(TitleMixin, LoginRequiredMixin, TemplateView):
     title = 'Профіль'
     template_name = 'user/index.html'
 
 
-class ListTelegramUserListView(TitleMixin, ListView):
+class ListTelegramUserListView(TitleMixin, LoginRequiredMixin, ListView):
     model = TelegramUser
     paginate_by = 3
     title = 'Telegram users'
     template_name = 'user/telegram_users/telegram_users_list.html'
 
 
-class DetailTelegramUserDetailView(TitleMixin, GroupRequiredMixin, DetailView):
+class DetailTelegramUserDetailView(TitleMixin, LoginRequiredMixin, GroupRequiredMixin, DetailView):
     model = TelegramUser
     title = 'Telegram user detail'
     template_name = 'user/telegram_users/telegram_user_detail.html'
     group_required = 'manager'
 
 
-class CreateTelegramUserCreateView(TitleMixin, GroupRequiredMixin, CreateView):
+class CreateTelegramUserCreateView(TitleMixin, LoginRequiredMixin, GroupRequiredMixin, CreateView):
     model = TelegramUser
     form_class = TelegramUserForm
     title = 'Create Telegram user'
@@ -51,7 +52,7 @@ class CreateTelegramUserCreateView(TitleMixin, GroupRequiredMixin, CreateView):
     group_required = 'manager'
 
 
-class UpdateTelegramUserUpdateView(TitleMixin, GroupRequiredMixin, UpdateView):
+class UpdateTelegramUserUpdateView(TitleMixin, LoginRequiredMixin, GroupRequiredMixin, UpdateView):
     model = TelegramUser
     form_class = TelegramUserForm
     title = 'Update Telegram user'
@@ -60,7 +61,7 @@ class UpdateTelegramUserUpdateView(TitleMixin, GroupRequiredMixin, UpdateView):
     group_required = 'manager'
 
 
-class DeleteTelegramUserDeleteView(TitleMixin, GroupRequiredMixin, DeleteView):
+class DeleteTelegramUserDeleteView(TitleMixin, LoginRequiredMixin, GroupRequiredMixin, DeleteView):
     model = TelegramUser
     title = 'Delete Telegram user'
     template_name = 'user/telegram_users/telegram_user_delete.html'
