@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% block extra_navbar_components %}
+    <div class="text-end">
+        {% if user|has_group:"manager" %}
+            <a href="{% url 'user:tg_users_create' %}" class="btn btn-light text-dark me-2">Add telegram user</a>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'user:tg_users_create' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

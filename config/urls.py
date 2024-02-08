@@ -17,14 +17,13 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from django.urls import include, path
-
-from apps.user.views import UserProfileView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', login_required(UserProfileView.as_view()), name='index'),
+    path('', lambda request: redirect('user:profile'), name='index'),
+    path('bots/', include('apps.telegram_bot.urls', namespace='telegram_bot')),
     path('users/', include('apps.user.urls', namespace='user')),
     path('accounts/', include('allauth.urls')),
 ]

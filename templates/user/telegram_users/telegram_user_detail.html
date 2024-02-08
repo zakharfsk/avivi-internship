@@ -14,7 +14,6 @@
     </div>
 {% endblock %}
 
-
 {% block content %}
     <div class="page-content page-container" id="page-content">
         <div class="d-flex justify-content-center align-items-center">
@@ -24,7 +23,14 @@
                         <div class="row m-l-0 m-r-0">
                             <div class="col-sm-4 bg-c-lite-green user-profile d-flex justify-content-center flex-column">
                                 <div class="card-block text-center text-white">
-                                    <h6 class="f-w-600">{{ user.first_name }} {{ user.last_name }}</h6>
+                                    <h6 class="f-w-600">{{ object.first_name }} {{ object.last_name }}</h6>
+                                    <p>
+                                        {% if object.username %}
+                                            @{{ object.username }}
+                                        {% else %}
+                                            Empty
+                                        {% endif %}
+                                    </p>
                                 </div>
                             </div>
                             <div class="col-sm-8">
@@ -32,47 +38,52 @@
                                     <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
                                     <div class="row">
                                         <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Email</p>
+                                            <p class="m-b-10 f-w-600">Telegram ID</p>
                                             <h6 class="text-muted f-w-400">
-                                                {% if user.email %}
-                                                    {{ user.email }}
+                                                {% if object.telegram_id %}
+                                                    {{ object.telegram_id }}
                                                 {% else %}
                                                     Empty
                                                 {% endif %}
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Phone</p>
+                                            <p class="m-b-10 f-w-600">Lang</p>
                                             <h6 class="text-muted f-w-400">
-                                                {% if user.phone_number %}
-                                                    {{ user.phone_number }}
+                                                {% if object.lang %}
+                                                    {{ object.lang }}
                                                 {% else %}
                                                     Empty
                                                 {% endif %}
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Birthday</p>
+                                            <p class="m-b-10 f-w-600">Data create</p>
                                             <h6 class="text-muted f-w-400">
-                                                {% if user.birth_date %}
-                                                    {{ user.birth_date }}
-                                                {% else %}
-                                                    Empty
-                                                {% endif %}
+                                                {{ object.date_created }}
                                             </h6>
                                         </div>
                                         <div class="col-sm-6">
-                                            <p class="m-b-10 f-w-600">Bio</p>
+                                            <p class="m-b-10 f-w-600">Data update</p>
                                             <h6 class="text-muted f-w-400">
-                                                {% if user.bio %}
-                                                    {{ user.bio }}
-                                                {% else %}
-                                                    Empty
-                                                {% endif %}
+                                                {{ object.date_updated }}
                                             </h6>
                                         </div>
                                     </div>
                                 </div>
+                                {% if user|has_group:"manager" %}
+                                    <div class="card-block">
+                                        <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Operation</h6>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <a href="{% url 'user:tg_users_update' object.pk %}" class="m-b-10 f-w-600">Update</a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <a href="{% url 'user:tg_users_delete' object.pk %}" class="m-b-10 f-w-600">Delete</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>

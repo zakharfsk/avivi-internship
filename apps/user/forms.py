@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
-from apps.user.models import User
+from apps.user.models import TelegramUser, User
 
 
 class UserLoginForm(AuthenticationForm):
@@ -48,3 +48,36 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+
+
+class TelegramUserForm(forms.ModelForm):
+    telegram_id = forms.IntegerField(widget=forms.NumberInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Telegram ID'
+    }))
+    username = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Username',
+    }), required=False)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'First name'
+    }))
+    last_name = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Last name'
+    }), required=False)
+    lang = forms.CharField(widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Lang'
+    }), required=False)
+
+    class Meta:
+        model = TelegramUser
+        fields = (
+            'telegram_id',
+            'username',
+            'first_name',
+            'last_name',
+            'lang'
+        )
