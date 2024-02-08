@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'django_dump_die',
     # Local apps
     'apps.user',
+    'apps.telegram_bot',
 ]
 
 MIDDLEWARE = [

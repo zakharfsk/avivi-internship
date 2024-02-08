@@ -23,6 +23,7 @@ from django.urls import include, path
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', lambda request: redirect('user:profile'), name='index'),
+    path('bots/', include('apps.telegram_bot.urls', namespace='telegram_bot')),
     path('users/', include('apps.user.urls', namespace='user')),
     path('accounts/', include('allauth.urls')),
 ]
