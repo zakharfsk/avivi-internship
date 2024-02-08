@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
@@ -54,6 +55,7 @@ def telegram_bot_webhook_view(request: WSGIRequest):
     return JsonResponse({'status': 'ok'})
 
 
+@login_required
 def telegram_bot_set_webhook(request: WSGIRequest, pk: int):
     bot = TelegramBot.objects.get(pk=pk)
     absolute_uri = request.build_absolute_uri(reverse_lazy('telegram_bot:telegram_bots_webhook')).replace('http://',
