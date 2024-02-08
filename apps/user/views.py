@@ -28,21 +28,21 @@ class UserProfileView(TitleMixin, TemplateView):
     template_name = 'user/index.html'
 
 
-class ListTelegramUser(TitleMixin, ListView):
+class ListTelegramUserListView(TitleMixin, ListView):
     model = TelegramUser
     paginate_by = 3
     title = 'Telegram users'
     template_name = 'user/telegram_users/telegram_users_list.html'
 
 
-class DetailTelegramUser(TitleMixin, GroupRequiredMixin, DetailView):
+class DetailTelegramUserDetailView(TitleMixin, GroupRequiredMixin, DetailView):
     model = TelegramUser
     title = 'Telegram user detail'
     template_name = 'user/telegram_users/telegram_user_detail.html'
     group_required = 'manager'
 
 
-class CreateTelegramUser(TitleMixin, GroupRequiredMixin, CreateView):
+class CreateTelegramUserCreateView(TitleMixin, GroupRequiredMixin, CreateView):
     model = TelegramUser
     form_class = TelegramUserForm
     title = 'Create Telegram user'
@@ -51,7 +51,7 @@ class CreateTelegramUser(TitleMixin, GroupRequiredMixin, CreateView):
     group_required = 'manager'
 
 
-class UpdateTelegramUser(TitleMixin, GroupRequiredMixin, UpdateView):
+class UpdateTelegramUserUpdateView(TitleMixin, GroupRequiredMixin, UpdateView):
     model = TelegramUser
     form_class = TelegramUserForm
     title = 'Update Telegram user'
@@ -60,7 +60,7 @@ class UpdateTelegramUser(TitleMixin, GroupRequiredMixin, UpdateView):
     group_required = 'manager'
 
 
-class DeleteTelegramUser(TitleMixin, GroupRequiredMixin, DeleteView):
+class DeleteTelegramUserDeleteView(TitleMixin, GroupRequiredMixin, DeleteView):
     model = TelegramUser
     title = 'Delete Telegram user'
     template_name = 'user/telegram_users/telegram_user_delete.html'
