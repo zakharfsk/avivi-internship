@@ -3,7 +3,9 @@ services:
   server:
     container_name: server
     restart: always
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./:/app
       - ./templates:/app/templates
@@ -17,6 +19,19 @@ services:
       DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
     depends_on:
       - postgres
+
+  bot:
+    container_name: bot
+    restart: always
+    build:
+      context: .
+      dockerfile: DockerfileBot
+    command: python main.py
+    volumes:
+      - ./:/app
+      - ./bot:/bot
+    env_file:
+      - .env
 
   postgres:
     image: postgres:latest

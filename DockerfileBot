@@ -7,7 +7,7 @@
 # Want to help us make this template better? Share your feedback here: https://forms.gle/ybq9Krt8jtBL3iCk7
 
 ARG PYTHON_VERSION=3.12.1
-FROM python:${PYTHON_VERSION}-slim as base
+FROM python:${PYTHON_VERSION}-slim AS base
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -18,7 +18,9 @@ ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update && apt-get install -y build-essential libpq-dev && rm -rf /var/lib/apt/lists/*
 
-WORKDIR /app
+WORKDIR /bot
+
+#COPY ./requirements.txt .
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
 # Leverage a cache mount to /root/.cache/pip to speed up subsequent builds.
@@ -30,13 +32,4 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 
 # Copy the source code into the container.
-COPY . .
-
-# Expose the port that the application listens on.
-EXPOSE 8000
-
-ADD docker-entrypoint.sh /docker-entrypoint.sh
-
-RUN chmod a+x /docker-entrypoint.sh
-
-ENTRYPOINT ["bash", "-e", "/docker-entrypoint.sh"]
+COPY ./bot .
