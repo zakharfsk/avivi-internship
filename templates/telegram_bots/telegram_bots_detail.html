@@ -30,7 +30,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Bot username</p>
-                                          <h6 class="text-muted f-w-400">
+                                        <h6 class="text-muted f-w-400">
                                             {{ telegrambot.username }}
                                         </h6>
                                     </div>
@@ -50,6 +50,16 @@
                                     <div>
                                         <a href="{% url 'telegram_bot:telegram_bots_delete' telegrambot.pk %}"
                                            class="m-b-10 f-w-600">Delete</a>
+                                    </div>
+                                    <div>
+                                        {% if telegrambot.webhook_enabled %}
+                                            <a href="{% url 'telegram_bot:telegram_bots_set_webhook' telegrambot.pk %}"
+                                               class="m-b-10 f-w-600">Disable webhook</a>
+                                        {% else %}
+                                            <a href="{% url 'telegram_bot:telegram_bots_set_webhook' telegrambot.pk %}"
+                                               class="m-b-10 f-w-600">Enable webhook</a>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
