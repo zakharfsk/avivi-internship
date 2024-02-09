@@ -6,10 +6,11 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup, ReplyMarkup
 
+from apps.telegram_bot.callbacks_types import CallBacksTypes
 from apps.telegram_bot.forms import TelegramBotForm
 from apps.telegram_bot.models import TelegramBot
 from apps.user.models import TelegramUser
@@ -54,16 +55,51 @@ class TelegramBotDeleteView(TitleMixin, LoginRequiredMixin, SuperUserRequiredMix
 
 @csrf_exempt
 def telegram_bot_webhook_view(request: WSGIRequest):
-    bot_body = json.loads(request.body.decode('utf-8'))
+    decode_body = json.loads(request.body.decode('utf-8'))
+    bot = Bot(token=TelegramBot.objects.first().token)
 
-    if bot_body['message']['text'] == '/start':
-        TelegramUser.objects.get_or_create(
-            telegram_id=bot_body['message']['from']['id'],
-            username=bot_body['message']['from'].get('username', ''),
-            first_name=bot_body['message']['from']['first_name'],
-            last_name=bot_body['message']['from'].get('last_name', ''),
-            lang=bot_body['message']['from']['language_code']
+    load_body = decode_body if decode_body.get("message") else decode_body.get("callback_query")
+    is_callback_query = bool(decode_body.get("callback_query"))
+    type_callback = load_body['data'].split(':')[0] if is_callback_query else None
+
+    if load_body['message']['text'] == '/start':
+        tg_user, created = TelegramUser.objects.get_or_create(
+            telegram_id=load_body['message']['from']['id'],
+            username=load_body['message']['from'].get('username', ''),
+            first_name=load_body['message']['from']['first_name'],
+            last_name=load_body['message']['from'].get('last_name', '')
         )
+
+        if created:
+            bot.send_message(
+                text='Choose language',
+                chat_id=load_body['message']['from']['id'],
+                reply_markup=InlineKeyboardMarkup(
+                    inline_keyboard=[
+                        [
+                            InlineKeyboardButton(text='English', callback_data='set_lang:en'),
+                            InlineKeyboardButton(text='Українська', callback_data='set_lang:ua')
+                        ],
+                    ]
+                )
+            )
+        else:
+            bot.send_message(
+                chat_id=load_body['message']['from']['id'],
+                text='Welcome' if tg_user.lang == 'en' else 'Вітаю'
+            )
+
+    if is_callback_query:
+        if type_callback == CallBacksTypes.SET_LANG:
+            TelegramUser.objects.filter(telegram_id=load_body['from']['id']).update(lang=load_body['data'])
+            bot.edit_message_text(
+                chat_id=load_body['from']['id'],
+                message_id=load_body['message']['message_id'],
+                text='Вітаю' if load_body['data'] == 'ua' else 'Welcome'
+            )
+
+        if type_callback == CallBacksTypes.CHANGE_LANG:
+            pass
 
     return JsonResponse({'status': 'ok'})
 
@@ -71,16 +107,19 @@ def telegram_bot_webhook_view(request: WSGIRequest):
 @login_required
 def telegram_bot_set_webhook(request: WSGIRequest, pk: int):
     bot = TelegramBot.objects.get(pk=pk)
-    absolute_uri = request.build_absolute_uri(reverse_lazy('telegram_bot:telegram_bots_webhook')).replace('http://',
-                                                                                                          'https://')
+    tg_bot_obj = Bot(token=bot.token)
+    absolute_uri = request.build_absolute_uri(
+        reverse_lazy('telegram_bot:telegram_bots_webhook')
+    ).replace('http://', 'https://')
+
     if bot.webhook_enabled:
-        tg_api_response = bot.delete_webhook()
+        webhook = tg_bot_obj.delete_webhook()
         bot.webhook_enabled = False
     else:
-        tg_api_response = bot.set_webhook(absolute_uri)
+        webhook = tg_bot_obj.set_webhook(absolute_uri)
         bot.webhook_enabled = True
 
-    if tg_api_response['ok']:
+    if webhook:
         bot.save()
 
     return redirect(request.META['HTTP_REFERER'])
