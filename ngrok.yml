@@ -5,7 +5,7 @@ tunnels:
     addr: nginx:80
     schemes:
       - https
-    host_header: "grub-ace-privately.ngrok-free.app"
+    host_header: "avivi-internship.ngrok.dev"
     proto: http
     inspect: true
-    domain: grub-ace-privately.ngrok-free.app
+    domain: avivi-internship.ngrok.dev
