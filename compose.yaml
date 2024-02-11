@@ -73,7 +73,8 @@ services:
     command: "echo -e 'y' | ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa >/dev/null 2>&1"
     volumes:
       - ./:/app
-      - ~/.ssh:/root/.ssh
+      - ~/.ssh/id_rsa:/root/.ssh/id_rsa
+      - ~/.ssh/id_rsa.pub:/root/.ssh/id_rsa.pub
     environment:
       LOCAL_HOST: nginx
       LOCAL_PORT: 80
