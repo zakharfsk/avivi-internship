@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load user_tags %}
 {% load static %}
 
 {% block stylesheets %}
@@ -6,10 +7,14 @@
 {% endblock %}
 
 {% block extra_navbar_components %}
-    <div class="text-end">
-        <a href="{% url 'telegram_bot:telegram_bots_create' %}" class="btn btn-light text-dark me-2">Add telegram
-            bot</a>
-    </div>
+    {% if user|has_group:"manager" %}
+        <div class="text-end">
+            <a href="{% url 'product:product_create' %}" class="btn btn-light text-dark me-2">Add product</a>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'product:category_create' %}" class="btn btn-light text-dark me-2">Add product category</a>
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -25,18 +30,18 @@
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Bot name</p>
                                         <h6 class="text-muted f-w-400">
-                                            {{ telegrambot.name }}
+                                            {{ product.name }}
                                         </h6>
                                     </div>
                                     <div class="col-sm-6">
                                         <p class="m-b-10 f-w-600">Bot username</p>
                                         <h6 class="text-muted f-w-400">
-                                            {{ telegrambot.username }}
+                                            {{ product.username }}
                                         </h6>
                                     </div>
                                     <p class="m-b-10 f-w-600">Bot token</p>
                                     <h6 class="text-muted f-w-400">
-                                        {{ telegrambot.token }}
+                                        {{ product.token }}
                                     </h6>
                                 </div>
                             </div>
@@ -44,22 +49,12 @@
                                 <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Operation</h6>
                                 <div class="d-flex justify-content-around">
                                     <div>
-                                        <a href="{% url 'telegram_bot:telegram_bots_update' telegrambot.pk %}"
+                                        <a href="{% url 'product:product_update' product.pk %}"
                                            class="m-b-10 f-w-600">Update</a>
                                     </div>
                                     <div>
-                                        <a href="{% url 'telegram_bot:telegram_bots_delete' telegrambot.pk %}"
+                                        <a href="{% url 'product:product_delete' product.pk %}"
                                            class="m-b-10 f-w-600">Delete</a>
-                                    </div>
-                                    <div>
-                                        {% if telegrambot.webhook_enabled %}
-                                            <a href="{% url 'telegram_bot:telegram_bots_set_webhook' telegrambot.pk %}"
-                                               class="m-b-10 f-w-600">Disable webhook</a>
-                                        {% else %}
-                                            <a href="{% url 'telegram_bot:telegram_bots_set_webhook' telegrambot.pk %}"
-                                               class="m-b-10 f-w-600">Enable webhook</a>
-                                        {% endif %}
-
                                     </div>
                                 </div>
                             </div>

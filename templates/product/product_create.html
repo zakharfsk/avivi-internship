@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+
+{% block extra_navbar_components %}
+    {% if user|has_group:'manager' %}
+        <div class="text-end">
+            <a href="{% url 'product:product_create' %}" class="btn btn-light text-dark me-2">Add product</a>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'product:category_create' %}" class="btn btn-light text-dark me-2">Add product category</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'product:product_create' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+{% endblock %}

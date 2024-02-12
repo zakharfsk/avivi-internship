@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block extra_navbar_components %}
+    {% if user|has_group:"manager" %}
+        <div class="text-end">
+            <a href="{% url 'product:product_create' %}" class="btn btn-light text-dark me-2">Add product</a>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'product:category_create' %}" class="btn btn-light text-dark me-2">Add product category</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>Confirm Delete</h1>
+    <p>Are you sure you want to delete "{{ object.pk }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a href="{% url 'product:product_delete' object.pk %}" class="btn btn-danger">Cancel</a>
+    </form>
+{% endblock content %}
