@@ -23,7 +23,7 @@
         <div class="list-group col-md-3 ps-5 pt-5">
             <div class="position-fixed">
                 {% for category in categories %}
-                    <a href="{% url 'product:products_category' category.pk %}" class="list-group-item list-group-item-action">
+                    <a href="{% url 'product:products_category' category.pk %}" class="list-group-item list-group-item-action {% if category_id == category.pk %} active {% endif %}">
                         {{ category.name }}
                     </a>
                 {% endfor %}
