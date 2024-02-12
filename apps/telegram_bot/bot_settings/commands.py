@@ -1,0 +1,2 @@
+class BotCommand:
+    START = '/start'

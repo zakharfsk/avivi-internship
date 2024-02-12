@@ -3,7 +3,9 @@ services:
   server:
     container_name: server
     restart: always
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - ./:/app
       - ./templates:/app/templates
@@ -64,6 +66,18 @@ services:
     ports:
       - "4040:4040"
 
+  serveo:
+    image: jacobtomlinson/serveo:latest
+    container_name: serveo
+    entrypoint: "/app/serveo-entrypoint.sh"
+    command: "echo -e 'y' | ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa >/dev/null 2>&1"
+    volumes:
+      - ./:/app
+      - ~/.ssh:/root/.ssh
+    environment:
+      LOCAL_HOST: nginx
+      LOCAL_PORT: 80
+      DOMAIN: avivi-internship
 
 volumes:
   static:
