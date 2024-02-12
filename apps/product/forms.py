@@ -14,8 +14,7 @@ class ProductForm(forms.ModelForm):
         widget=forms.FileInput(attrs={'class': 'form-control-file'})
     )
     category = forms.ModelChoiceField(queryset=Category.objects.all(),
-                                      widget=forms.Select(attrs={'class': 'form-control'}),
-                                      required=False)
+                                      widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Product
