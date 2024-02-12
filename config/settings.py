@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     # Third-party apps
     'allauth',
     'allauth.account',
@@ -50,6 +51,7 @@ INSTALLED_APPS = [
     # Local apps
     'apps.user',
     'apps.telegram_bot',
+    'apps.product',
 ]
 
 MIDDLEWARE = [
