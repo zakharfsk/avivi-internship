@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load user_tags %}
+{% load static %}
+{% load humanize %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block extra_navbar_components %}
+    {% if user|has_group:"manager" %}
+        <div class="text-end">
+            <a href="{% url 'product:product_create' %}" class="btn btn-light text-dark me-2">Add product</a>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'product:category_create' %}" class="btn btn-light text-dark me-2">Add product category</a>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="row w-100">
+        <div class="list-group col-md-3 ps-5 pt-5">
+            <div class="position-fixed">
+                <a href="{% url 'product:products' %}"
+                   class="list-group-item list-group-item-action {% if not category_id %} active {% endif %}">
+                    Всі товари
+                </a>
+                {% for category in categories %}
+                    <a href="{% url 'product:products_category' category.pk %}"
+                       class="list-group-item list-group-item-action {% if category_id == category.pk %} active {% endif %}">
+                        {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-9">
+            {% for product in products %}
+                <div class="page-content page-container" id="page-content">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="row container d-flex justify-content-center">
+                            <div class="col-xl-8 col-md-12">
+                                <div class="card user-card-full">
+                                    <div class="row m-l-0 m-r-0">
+                                        <div class="col-sm-4 bg-c-lite-green user-profile d-flex justify-content-center flex-column">
+                                            <div class="card-block text-center text-white h-100">
+                                                <img src="{{ product.photo.url }}" alt="Product photo" width="100%"
+                                                     height="100%" class="object-fit-cover">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="p-3">
+                                                <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <p class="m-b-10 f-w-600">Product name</p>
+                                                        <h6 class="text-muted f-w-400">
+                                                            {{ product.name }}
+                                                        </h6>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <p class="m-b-10 f-w-600">Product category</p>
+                                                        <h6 class="text-muted f-w-400">
+                                                            {{ product.category.name }}
+                                                        </h6>
+                                                    </div>
+                                                    <p class="m-b-10 f-w-600">Product price</p>
+                                                    <h6 class="text-muted f-w-400">
+                                                        {{ product.price|intcomma }} UAH
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            {% if user|has_group:"manager" %}
+                                                <div class="p-3">
+                                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Operation</h6>
+                                                    <div class="d-flex justify-content-around">
+                                                        <div>
+                                                            <a href="{% url 'product:product_detail' product.pk %}"
+                                                               class="m-b-10 f-w-600">Detail</a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="{% url 'product:product_update' product.pk %}"
+                                                               class="m-b-10 f-w-600">Update</a>
+                                                        </div>
+                                                        <div>
+                                                            <a href="{% url 'product:product_delete' product.pk %}"
+                                                               class="m-b-10 f-w-600">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+            {% if is_paginated %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link">Previous</a>
+                        </li>
+                        {% for page in paginator.page_range %}
+                            <li class="page-item"><a class="page-link"
+                                                     href="{% url 'product:products_paginator' page %}">{{ page }}</a>
+                            </li>
+                        {% endfor %}
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

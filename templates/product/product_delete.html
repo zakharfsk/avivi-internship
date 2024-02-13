@@ -9,7 +9,10 @@
 {% block extra_navbar_components %}
     {% if user|has_group:"manager" %}
         <div class="text-end">
-            <a href="{% url 'user:tg_users_create' %}" class="btn btn-light text-dark me-2">Add telegram user</a>
+            <a href="{% url 'product:product_create' %}" class="btn btn-light text-dark me-2">Add product</a>
+        </div>
+        <div class="text-end">
+            <a href="{% url 'product:category_create' %}" class="btn btn-light text-dark me-2">Add product category</a>
         </div>
     {% endif %}
 {% endblock %}
@@ -20,6 +23,6 @@
     <form method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary">Delete</button>
-        <a href="{% url 'user:tg_users' %}" class="btn btn-danger">Cancel</a>
+        <a href="{% url 'product:product_delete' object.pk %}" class="btn btn-danger">Cancel</a>
     </form>
 {% endblock content %}

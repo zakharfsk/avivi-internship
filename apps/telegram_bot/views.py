@@ -7,13 +7,13 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils import translation
-from django.utils.translation import get_language_info, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup
 
-from apps.telegram_bot.bot_settings.callbacks import CallBacksTypes
-from apps.telegram_bot.bot_settings.commands import BotCommand
+from apps.telegram_bot.bot.callbacks import TypeCallBacks
+from apps.telegram_bot.bot.commands import BotCommand
 from apps.telegram_bot.forms import TelegramBotForm
 from apps.telegram_bot.models import TelegramBot
 from apps.user.models import TelegramUser
@@ -104,7 +104,7 @@ def telegram_bot_webhook_view(request: WSGIRequest):
             )
 
     if is_callback_query:
-        if type_callback == CallBacksTypes.SET_LANG:
+        if type_callback == TypeCallBacks.SET_LANG:
             TelegramUser.objects.filter(telegram_id=load_body['from']['id']).update(
                 lang=load_body['data'].split(':')[1]
             )
@@ -116,7 +116,7 @@ def telegram_bot_webhook_view(request: WSGIRequest):
                 text=str(_('tg_bot_greeting'))
             )
 
-        if type_callback == CallBacksTypes.CHANGE_LANG:
+        if type_callback == TypeCallBacks.CHANGE_LANG:
             pass
 
     translation.deactivate()

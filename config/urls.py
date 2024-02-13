@@ -25,6 +25,7 @@ urlpatterns = [
     path('', lambda request: redirect('user:profile'), name='index'),
     path('bots/', include('apps.telegram_bot.urls', namespace='telegram_bot')),
     path('users/', include('apps.user.urls', namespace='user')),
+    path('products/', include('apps.product.urls', namespace='product')),
     path('accounts/', include('allauth.urls')),
 ]
 
