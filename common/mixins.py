@@ -26,3 +26,17 @@ class SuperUserRequiredMixin:
             return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
         else:
             return HttpResponseForbidden('Forbidden. You are not a superuser.')
+
+
+class FilterMixin:
+    filterset_class = None
+
+    def get_queryset(self):
+        queryset = super(FilterMixin, self).get_queryset()
+        self.filterset = self.filterset_class(self.request.GET, queryset=queryset)
+        return self.filterset.qs.distinct()
+
+    def get_context_data(self, **kwargs):
+        context = super(FilterMixin, self).get_context_data(**kwargs)
+        context['filterset'] = self.filterset
+        return context

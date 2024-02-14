@@ -2,17 +2,19 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
+from apps.product.filters import ProductFilter
 from apps.product.forms import CategoryForm, ProductForm
 from apps.product.models import Category, Product
-from common.mixins import GroupRequiredMixin, TitleMixin
+from common.mixins import FilterMixin, GroupRequiredMixin, TitleMixin
 
 
-class ProductListView(TitleMixin, ListView):
+class ProductListView(TitleMixin, FilterMixin, ListView):
     title = 'Products'
     model = Product
     template_name = 'product/product_list.html'
     context_object_name = 'products'
     paginate_by = 3
+    filterset_class = ProductFilter
 
     def get_queryset(self):
         queryset = super(ProductListView, self).get_queryset()
