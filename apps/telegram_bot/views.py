@@ -7,17 +7,13 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils import translation
-from django.utils.translation import gettext_lazy as _
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
-from telegram import Bot, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Bot
 
-from apps.telegram_bot.bot.callbacks import TypeCallBacks
-from apps.telegram_bot.bot.commands import BotCommand
 from apps.telegram_bot.bot.handler import UpdateHandler
 from apps.telegram_bot.forms import TelegramBotForm
 from apps.telegram_bot.models import TelegramBot
-from apps.user.models import TelegramUser
 from common.mixins import SuperUserRequiredMixin, TitleMixin
 
 
