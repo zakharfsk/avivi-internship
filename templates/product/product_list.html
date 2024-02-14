@@ -23,7 +23,6 @@
         <div class="list-group col-md-3 ps-5 pt-5">
             <div class="position-fixed">
                 <form method="get">
-                    {% csrf_token %}
                     {{ filterset.form.as_p }}
                     <button type="submit" class="btn btn-primary">Search</button>
                 </form>

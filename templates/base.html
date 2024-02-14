@@ -20,7 +20,6 @@
                 <a href="{% url 'user:profile' %}"
                    class="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-white text-decoration-none">
                     Home</a>
-
                 <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                     <li>
                         <a href="{% url 'product:products' %}" class="nav-link text-white">
@@ -50,6 +49,10 @@
     </div>
     <div class="px-3 py-2 border-bottom mb-3">
         <div class="container d-flex flex-wrap justify-content-end">
+            <form action="{% url 'product:products' %}" method="get" class="col-12 col-lg-auto mb-2 mb-lg-0 me-lg-auto d-flex">
+                <input type="search" name="query" class="form-control" placeholder="Search..." aria-label="Search">
+                <button type="submit" class="btn btn-light"><i class="fas fa-search"></i></button>
+            </form>
             {% block extra_navbar_components %}
 
             {% endblock %}

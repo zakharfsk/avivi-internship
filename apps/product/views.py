@@ -1,4 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import SearchVector
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
@@ -18,9 +20,8 @@ class ProductListView(TitleMixin, FilterMixin, ListView):
 
     def get_queryset(self):
         queryset = super(ProductListView, self).get_queryset()
-        category_id = self.kwargs.get('category_id')
-
-        return queryset.filter(category_id=category_id) if category_id else queryset
+        query = self.request.GET.get('query', None)
+        return queryset.filter(Q(name__icontains=query) | Q(category__name__icontains=query)) if query else queryset
 
     def get_context_data(self, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
