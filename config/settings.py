@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.telegram',
     'django_dump_die',
+    'django_filters',
     # Local apps
     'apps.user',
     'apps.telegram_bot',
