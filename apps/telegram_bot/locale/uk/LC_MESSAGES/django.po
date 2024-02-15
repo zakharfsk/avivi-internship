@@ -23,3 +23,9 @@ msgstr "Вітаю"
 
 msgid "tg_bot_unknown_command"
 msgstr "Невідома команда"
+
+msgid "tg_bot_keyboard_button_catalog"
+msgstr "Каталог"
+
+msgid "tg_bot_category_list"
+msgstr "Виберіть категорію"

@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from telegram import Bot
 
-from apps.telegram_bot.bot.handler import UpdateHandler
+from apps.telegram_bot.bot.handler import UpdaterHandler
 from apps.telegram_bot.forms import TelegramBotForm
 from apps.telegram_bot.models import TelegramBot
 from common.mixins import SuperUserRequiredMixin, TitleMixin
@@ -58,10 +58,7 @@ def telegram_bot_webhook_view(request: WSGIRequest):
     bot = Bot(token=TelegramBot.objects.first().token)
     decode_body = json.loads(request.body.decode('utf-8'))
 
-    updater = UpdateHandler(
-        decode_body,
-        bot
-    )
+    updater = UpdaterHandler(decode_body, bot)
     updater.handle()
 
     translation.deactivate()
