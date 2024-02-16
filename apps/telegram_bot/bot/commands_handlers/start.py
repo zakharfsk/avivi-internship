@@ -1,12 +1,17 @@
+from typing import TYPE_CHECKING
+
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
 from django.utils.translation import gettext_lazy as _
 
 from apps.user.models import TelegramUser
 
+if TYPE_CHECKING:
+    from apps.telegram_bot.bot.handler import UpdaterHandler
+
 
 class StartHandler:
     def __init__(self, updater):
-        self.updater = updater
+        self.updater: 'UpdaterHandler' = updater
 
     def handle(self):
         tg_user, created = TelegramUser.objects.get_or_create(
