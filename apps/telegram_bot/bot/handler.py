@@ -46,7 +46,7 @@ class UpdaterHandler:
         tg_user = TelegramUser.objects.filter(
             telegram_id=self.body['from']['id']
         )
-        translation.activate(tg_user.first().lang if tg_user.first().lang else 'en')
+        translation.activate(tg_user.first().lang if tg_user.exists() else 'en')
 
     @staticmethod
     def is_command(message: dict):
