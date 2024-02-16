@@ -1,9 +1,13 @@
+from builtins import staticmethod
+
 from django.utils import translation
 from telegram import Bot
 from django.utils.translation import gettext_lazy as _
 
 from apps.telegram_bot.bot.callbacks import TypeCallBacks
+from apps.telegram_bot.bot.callbacks_handlers.list_categories_callback import ListCategoriesCallBack
 from apps.telegram_bot.bot.callbacks_handlers.setlang_callback import SetLangCallBack
+from apps.telegram_bot.bot.callbacks_handlers.show_products import ProductsHandler
 from apps.telegram_bot.bot.commands import BotCommand
 from apps.telegram_bot.bot.commands_handlers.start import StartHandler
 from apps.telegram_bot.bot.text_handlers.catalog_handler import CatalogHandler
@@ -19,7 +23,6 @@ class UpdaterHandler:
         self.bot = bot
 
     def handle(self):
-        print(self.body)
         self.activate_lang()
 
         if BotCommand.START == self.get_command():
@@ -28,8 +31,14 @@ class UpdaterHandler:
         if self.get_callback_type() == TypeCallBacks.SET_LANG:
             SetLangCallBack(self).handle()
 
-        if self.get_callback_type() == TypeCallBacks.SHOW_PRODUCT_BY_CAT_ID:
-            pass
+        if self.get_callback_type() == TypeCallBacks.SHOW_PRODUCTS or self.get_callback_type() == TypeCallBacks.SHOW_PRODUCT_BY_CAT_ID:
+            ProductsHandler(self).handle()
+
+        if self.get_callback_type() == TypeCallBacks.LIST_PRODUCT_CHANGE_PAGE:
+            ProductsHandler(self).change_page()
+
+        if self.get_callback_type() == TypeCallBacks.LIST_CATEGORIES_CHANGE_PAGE:
+            ListCategoriesCallBack(self).handle()
 
         if self.body.get('text') == str(_('tg_bot_keyboard_button_catalog')):
             CatalogHandler(self).handle()
@@ -40,16 +49,20 @@ class UpdaterHandler:
         )
         translation.activate(tg_user.first().lang if tg_user.first().lang else 'en')
 
-    def is_command(self, message: dict):
+    @staticmethod
+    def is_command(message: dict):
         return True if message.get('message', {}).get('entities') else False
 
-    def is_text_message(self, message: dict):
+    @staticmethod
+    def is_text_message(message: dict):
         return True if 'message' in message else False
 
-    def is_callback(self, message):
+    @staticmethod
+    def is_callback(message):
         return True if 'callback_query' in message else False
 
-    def is_keyboard_command(self, message: dict):
+    @staticmethod
+    def is_keyboard_command(message: dict):
         return True if not message.get('message', {}).get('text').startswith('/') else False
 
     def get_command(self):
@@ -57,3 +70,6 @@ class UpdaterHandler:
 
     def get_callback_type(self):
         return self.body.get('data', '').split(':')[0]
+
+    def get_call_back_data(self):
+        return self.body.get('data', '').split(':')[1]
