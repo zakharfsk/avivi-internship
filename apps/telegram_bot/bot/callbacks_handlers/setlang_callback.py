@@ -1,13 +1,17 @@
+from typing import TYPE_CHECKING
+
 from django.utils import translation
 from django.utils.translation import gettext_lazy as _
-from telegram import ReplyKeyboardRemove
 
 from apps.user.models import TelegramUser
+
+if TYPE_CHECKING:
+    from apps.telegram_bot.bot.handler import UpdaterHandler
 
 
 class SetLangCallBack:
     def __init__(self, updater):
-        self.updater = updater
+        self.updater: 'UpdaterHandler' = updater
 
     def handle(self):
         lang = self.updater.body['data'].split(':')[1]
