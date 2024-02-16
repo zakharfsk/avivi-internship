@@ -1,5 +1,3 @@
-from builtins import staticmethod
-
 from django.utils import translation
 from telegram import Bot
 from django.utils.translation import gettext_lazy as _
@@ -10,6 +8,7 @@ from apps.telegram_bot.bot.callbacks_handlers.setlang_callback import SetLangCal
 from apps.telegram_bot.bot.callbacks_handlers.show_products import ProductsHandler
 from apps.telegram_bot.bot.commands import BotCommand
 from apps.telegram_bot.bot.commands_handlers.start import StartHandler
+from apps.telegram_bot.bot.text_commands import KeyboardTextCommand
 from apps.telegram_bot.bot.text_handlers.catalog_handler import CatalogHandler
 from apps.user.models import TelegramUser
 
@@ -40,7 +39,7 @@ class UpdaterHandler:
         if self.get_callback_type() == TypeCallBacks.LIST_CATEGORIES_CHANGE_PAGE:
             ListCategoriesCallBack(self).handle()
 
-        if self.body.get('text') == str(_('tg_bot_keyboard_button_catalog')):
+        if self.body.get('text') == str(_(KeyboardTextCommand.CATALOG)):
             CatalogHandler(self).handle()
 
     def activate_lang(self):
