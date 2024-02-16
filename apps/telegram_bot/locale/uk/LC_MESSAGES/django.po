@@ -29,3 +29,19 @@ msgstr "Каталог"
 
 msgid "tg_bot_category_list"
 msgstr "Виберіть категорію"
+
+msgid "tg_bot_product_list"
+msgstr "Всі товари"
+
+msgid "tg_bot_product_price"
+msgstr "Ціна"
+
+msgid "tg_bot_product_colour"
+msgstr "Колір"
+
+msgid "tg_bot_product_brand"
+msgstr "Бренд"
+
+msgid "tg_bot_product_size"
+msgstr "Розмір"
+
