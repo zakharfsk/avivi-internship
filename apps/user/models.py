@@ -13,9 +13,9 @@ class User(AbstractUser):
 
 class TelegramUser(models.Model):
     telegram_id = models.BigIntegerField(unique=True)
-    username = models.CharField(max_length=255, unique=True, blank=True)
-    first_name = models.CharField(max_length=255, blank=True)
-    last_name = models.CharField(max_length=255, blank=True)
+    username = models.CharField(max_length=255, unique=True, blank=True, null=True)
+    first_name = models.CharField(max_length=255, blank=True, null=True)
+    last_name = models.CharField(max_length=255, blank=True, null=True)
     state = models.CharField(max_length=255, blank=True)
     two_auth_enabled = models.BooleanField(default=False)
     lang = models.CharField(max_length=5, blank=True)

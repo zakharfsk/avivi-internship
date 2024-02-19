@@ -23,9 +23,9 @@ class UpdaterHandler:
         else:
             self.body = body['callback_query']
         self.bot = bot
-        self.a = Update.de_json(body, bot)
-        print(self.a.callback_query)
-        print(self.a.message)
+        self.update = Update.de_json(body, bot)
+        print(self.update.callback_query)
+        print(self.update.message)
 
     def handle(self):
         self.activate_lang()
