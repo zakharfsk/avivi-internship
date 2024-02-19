@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# Copyright (C) YEAR THE PACKAGE"S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -23,3 +23,24 @@ msgstr "Welcome"
 
 msgid "tg_bot_unknown_command"
 msgstr "Unknown command"
+
+msgid "tg_bot_keyboard_button_catalog"
+msgstr "Catalog"
+
+msgid "tg_bot_category_list"
+msgstr "Choose a category"
+
+msgid "tg_bot_product_list"
+msgstr "All products"
+
+msgid "tg_bot_product_price"
+msgstr "Price"
+
+msgid "tg_bot_product_colour"
+msgstr "Colour"
+
+msgid "tg_bot_product_brand"
+msgstr "Brand"
+
+msgid "tg_bot_product_size"
+msgstr "Size"
