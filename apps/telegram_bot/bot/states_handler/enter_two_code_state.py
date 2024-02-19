@@ -1,6 +1,7 @@
 from typing import TYPE_CHECKING
 from django.utils.translation import gettext_lazy as _
 
+from apps.telegram_bot.bot.states import State
 from apps.telegram_bot.bot.two_auth import verify_totp
 
 if TYPE_CHECKING:
@@ -21,7 +22,7 @@ class GetTwoAuthCodeHandler:
 
         tg_user = self.updater.get_tg_user()
         tg_user.two_auth_enabled = True
-        tg_user.state = ''
+        tg_user.state = State.NONE_STATE
         tg_user.save()
 
         self.updater.bot.send_message(
