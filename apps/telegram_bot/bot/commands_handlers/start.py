@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING
 
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ReplyKeyboardMarkup
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, KeyboardButton, ParseMode, ReplyKeyboardMarkup
 from django.utils.translation import gettext_lazy as _
 
 from apps.user.models import TelegramUser
