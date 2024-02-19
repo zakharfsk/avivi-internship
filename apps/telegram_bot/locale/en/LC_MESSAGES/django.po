@@ -33,6 +33,9 @@ msgstr "Wrong code"
 msgid "tg_bot_two_auth_enabled"
 msgstr "Two-factor authentication is enabled"
 
+msgid "tg_bot_keyboard_button_support"
+msgstr "Write to support"
+
 msgid "tg_bot_unknown_command"
 msgstr "Unknown command"
 

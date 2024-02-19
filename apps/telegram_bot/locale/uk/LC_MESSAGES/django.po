@@ -36,6 +36,9 @@ msgstr "Невірний код"
 msgid "tg_bot_two_auth_enabled"
 msgstr "Двофакторна автентифікація включена"
 
+msgid "tg_bot_keyboard_button_support"
+msgstr "Написати в підтримку"
+
 msgid "tg_bot_unknown_command"
 msgstr "Невідома команда"
 

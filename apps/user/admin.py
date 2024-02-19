@@ -101,5 +101,5 @@ class TelegramUserAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        ("Important dates", {"fields": ("date_created", "date_updated")}),
+        ("Date information", {"fields": ("date_created", "date_updated"), "classes": ("collapse",)},),
     )
