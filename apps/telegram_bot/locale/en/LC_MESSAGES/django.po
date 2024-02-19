@@ -1,5 +1,5 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE"S COPYRIGHT HOLDER
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -8,18 +8,30 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-11 15:04+0200\n"
+"POT-Creation-Date: 2024-02-19 17:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgid "tg_bot_two_auth_not_enabled"
+msgstr "Two-factor authentication is not enabled.\n"
+"Please connect using qr code or code above:\n"
+"<code>{code}</code>\n\n"
+"If you have already enabled two-factor authentication, enter the code in the following message."
+
 msgid "tg_bot_greeting"
 msgstr "Welcome"
+
+msgid "tg_bot_wrong_code"
+msgstr "Wrong code"
+
+msgid "tg_bot_two_auth_enabled"
+msgstr "Two-factor authentication is enabled"
 
 msgid "tg_bot_unknown_command"
 msgstr "Unknown command"
