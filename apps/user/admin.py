@@ -82,7 +82,9 @@ class TelegramUserAdmin(admin.ModelAdmin):
         "username",
         "first_name",
         "last_name",
-        "lang"
+        "lang",
+        "state",
+        "two_auth_enabled",
     )
     fieldsets = (
         (
@@ -94,6 +96,8 @@ class TelegramUserAdmin(admin.ModelAdmin):
                     "first_name",
                     "last_name",
                     "lang",
+                    "state",
+                    "two_auth_enabled",
                 )
             },
         ),
