@@ -25,6 +25,7 @@ env.read_env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str('DJANGO_SECRET_KEY')
+OTP_SECRET_KEY = env.str('OTP_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DJANGO_DEBUG', default=False)
@@ -125,7 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uk'
 LANGUAGES = [
     ('en', _('English')),
     ('uk', _('Ukrainian')),
