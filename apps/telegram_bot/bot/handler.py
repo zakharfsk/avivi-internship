@@ -1,6 +1,7 @@
 from django.utils import translation
 from telegram import Bot, Update
 from django.utils.translation import gettext_lazy as _
+from telegram_bot_calendar import DetailedTelegramCalendar
 
 from apps.telegram_bot.bot.callbacks import TypeCallBacks
 from apps.telegram_bot.bot.callbacks_handlers.list_categories_callback import ListCategoriesCallBack
@@ -12,6 +13,7 @@ from apps.telegram_bot.bot.states import State
 from apps.telegram_bot.bot.states_handler.enter_two_code_state import GetTwoAuthCodeHandler
 from apps.telegram_bot.bot.text_commands import KeyboardTextCommand
 from apps.telegram_bot.bot.text_handlers.catalog_handler import CatalogHandler
+from apps.telegram_bot.bot.text_handlers.schedule_handler import ScheduleHandler
 from apps.telegram_bot.bot.text_handlers.support_handler import SupportHandler
 from apps.user.models import TelegramUser
 
@@ -24,11 +26,13 @@ class UpdaterHandler:
             self.body = body['callback_query']
         self.bot = bot
         self.update = Update.de_json(body, bot)
+        # self.update.
         print(self.update.callback_query)
         print(self.update.message)
 
     def handle(self):
         self.activate_lang()
+        tg_user = self.get_tg_user()
 
         if BotCommand.START == self.get_command():
             StartHandler(self).handle()
@@ -39,9 +43,9 @@ class UpdaterHandler:
             return
 
         if (
-            self.get_tg_user().state == State.WRITE_SUPPORT_TITLE or
-            self.get_tg_user().state == State.WRITE_SUPPORT_DESCRIPTION or
-            self.get_tg_user().state == State.WRITE_SUPPORT_ENTER_TWO_AUTH_CODE
+            tg_user.state == State.WRITE_SUPPORT_TITLE or
+            tg_user.state == State.WRITE_SUPPORT_DESCRIPTION or
+            tg_user.state == State.WRITE_SUPPORT_ENTER_TWO_AUTH_CODE
         ):
             SupportHandler(self).handle()
             return
@@ -49,7 +53,10 @@ class UpdaterHandler:
         if self.get_callback_type() == TypeCallBacks.SET_LANG:
             SetLangCallBack(self).handle()
 
-        if self.get_callback_type() == TypeCallBacks.SHOW_PRODUCTS or self.get_callback_type() == TypeCallBacks.SHOW_PRODUCT_BY_CAT_ID:
+        if (
+            self.get_callback_type() == TypeCallBacks.SHOW_PRODUCTS or
+            self.get_callback_type() == TypeCallBacks.SHOW_PRODUCT_BY_CAT_ID
+        ):
             ProductsHandler(self).handle()
 
         if self.get_callback_type() == TypeCallBacks.LIST_PRODUCT_CHANGE_PAGE:
@@ -58,11 +65,17 @@ class UpdaterHandler:
         if self.get_callback_type() == TypeCallBacks.LIST_CATEGORIES_CHANGE_PAGE:
             ListCategoriesCallBack(self).handle()
 
+        if TypeCallBacks.CALENDAR_CALLBACK in self.get_callback():
+            ScheduleHandler(self).handle_callback()
+
         if self.body.get('text') == str(_(KeyboardTextCommand.CATALOG)):
             CatalogHandler(self).handle()
 
         if self.body.get('text') == str(_(KeyboardTextCommand.WRITE_TO_SUPPORT)):
             SupportHandler(self).handle()
+
+        if self.body.get('text') == str(_(KeyboardTextCommand.SET_SCHEDULE)):
+            ScheduleHandler(self).handle()
 
     def activate_lang(self):
         tg_user = TelegramUser.objects.filter(
@@ -93,6 +106,9 @@ class UpdaterHandler:
 
     def get_command(self):
         return self.body.get('text')
+
+    def get_callback(self):
+        return self.body.get('data')
 
     def get_callback_type(self):
         return self.body.get('data', '').split(':')[0]
