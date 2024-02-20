@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'apps.user',
     'apps.telegram_bot',
     'apps.product',
+    'apps.telegram_support',
 ]
 
 MIDDLEWARE = [
