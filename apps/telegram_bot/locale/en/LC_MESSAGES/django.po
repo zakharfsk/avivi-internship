@@ -24,6 +24,9 @@ msgstr "Two-factor authentication is not enabled.\n"
 "<code>{code}</code>\n\n"
 "If you have already enabled two-factor authentication, enter the code in the following message."
 
+msgid "tg_bot_keyboard_button_set_schedule"
+msgstr "Add a reminder"
+
 msgid "tg_bot_support_title"
 msgstr "Write your title of ticket"
 
