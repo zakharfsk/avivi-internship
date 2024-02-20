@@ -38,7 +38,11 @@ class UpdaterHandler:
             GetTwoAuthCodeHandler(self).handle()
             return
 
-        if self.get_tg_user().state == State.WRITE_SUPPORT_TITLE or self.get_tg_user().state == State.WRITE_SUPPORT_DESCRIPTION:
+        if (
+            self.get_tg_user().state == State.WRITE_SUPPORT_TITLE or
+            self.get_tg_user().state == State.WRITE_SUPPORT_DESCRIPTION or
+            self.get_tg_user().state == State.WRITE_SUPPORT_ENTER_TWO_AUTH_CODE
+        ):
             SupportHandler(self).handle()
             return
 
