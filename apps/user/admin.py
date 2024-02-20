@@ -85,6 +85,7 @@ class TelegramUserAdmin(admin.ModelAdmin):
         "lang",
         "state",
         "two_auth_enabled",
+        "state_data"
     )
     fieldsets = (
         (
@@ -98,6 +99,7 @@ class TelegramUserAdmin(admin.ModelAdmin):
                     "lang",
                     "state",
                     "two_auth_enabled",
+                    "state_data",
                 )
             },
         ),

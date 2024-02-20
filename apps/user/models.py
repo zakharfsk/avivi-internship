@@ -17,6 +17,7 @@ class TelegramUser(models.Model):
     first_name = models.CharField(max_length=255, blank=True, null=True)
     last_name = models.CharField(max_length=255, blank=True, null=True)
     state = models.CharField(max_length=255, blank=True)
+    state_data = models.JSONField(blank=True, null=True)
     two_auth_enabled = models.BooleanField(default=False)
     lang = models.CharField(max_length=5, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
