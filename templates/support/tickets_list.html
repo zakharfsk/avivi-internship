@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+    {% for ticket in tickets %}
+        <div class="page-content page-container" id="page-content">
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="row container d-flex justify-content-center">
+                    <div class="col-xl-6 col-md-12">
+                        <div class="card user-card-full">
+                            <div class="row m-l-0 m-r-0">
+                                <div class="p-3">
+                                    <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">From</p>
+                                            <h6 class="text-muted f-w-400">
+                                                {{ ticket.user.username }}
+                                            </h6>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <p class="m-b-10 f-w-600">Title</p>
+                                            <h6 class="text-muted f-w-400">
+                                                {{ ticket.title }}
+                                            </h6>
+                                        </div>
+                                        <p class="m-b-10 f-w-600">Description</p>
+                                        <h6 class="text-muted f-w-400">
+                                            {{ ticket.description }}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                </li>
+                {% for page in paginator.page_range %}
+                    <li class="page-item"><a class="page-link"
+                                             href="{% url 'telegram_support:tickets_paginator' page %}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    {% endif %}
+{% endblock %}
