@@ -1,5 +1,5 @@
 from django.utils import translation
-from telegram import Bot
+from telegram import Bot, Update
 from django.utils.translation import gettext_lazy as _
 
 from apps.telegram_bot.bot.callbacks import TypeCallBacks
@@ -12,6 +12,7 @@ from apps.telegram_bot.bot.states import State
 from apps.telegram_bot.bot.states_handler.enter_two_code_state import GetTwoAuthCodeHandler
 from apps.telegram_bot.bot.text_commands import KeyboardTextCommand
 from apps.telegram_bot.bot.text_handlers.catalog_handler import CatalogHandler
+from apps.telegram_bot.bot.text_handlers.support_handler import SupportHandler
 from apps.user.models import TelegramUser
 
 
@@ -22,6 +23,9 @@ class UpdaterHandler:
         else:
             self.body = body['callback_query']
         self.bot = bot
+        self.update = Update.de_json(body, bot)
+        print(self.update.callback_query)
+        print(self.update.message)
 
     def handle(self):
         self.activate_lang()
@@ -32,6 +36,14 @@ class UpdaterHandler:
 
         if self.get_tg_user().state == State.ENTER_TWO_AUTH_CODE:
             GetTwoAuthCodeHandler(self).handle()
+            return
+
+        if (
+            self.get_tg_user().state == State.WRITE_SUPPORT_TITLE or
+            self.get_tg_user().state == State.WRITE_SUPPORT_DESCRIPTION or
+            self.get_tg_user().state == State.WRITE_SUPPORT_ENTER_TWO_AUTH_CODE
+        ):
+            SupportHandler(self).handle()
             return
 
         if self.get_callback_type() == TypeCallBacks.SET_LANG:
@@ -48,6 +60,9 @@ class UpdaterHandler:
 
         if self.body.get('text') == str(_(KeyboardTextCommand.CATALOG)):
             CatalogHandler(self).handle()
+
+        if self.body.get('text') == str(_(KeyboardTextCommand.WRITE_TO_SUPPORT)):
+            SupportHandler(self).handle()
 
     def activate_lang(self):
         tg_user = TelegramUser.objects.filter(

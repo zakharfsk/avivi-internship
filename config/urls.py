@@ -26,6 +26,7 @@ urlpatterns = [
     path('bots/', include('apps.telegram_bot.urls', namespace='telegram_bot')),
     path('users/', include('apps.user.urls', namespace='user')),
     path('products/', include('apps.product.urls', namespace='product')),
+    path('support/', include('apps.telegram_support.urls', namespace='support')),
     path('accounts/', include('allauth.urls')),
 ]
 

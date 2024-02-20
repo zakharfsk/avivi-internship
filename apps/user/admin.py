@@ -85,6 +85,7 @@ class TelegramUserAdmin(admin.ModelAdmin):
         "lang",
         "state",
         "two_auth_enabled",
+        "state_data"
     )
     fieldsets = (
         (
@@ -98,8 +99,9 @@ class TelegramUserAdmin(admin.ModelAdmin):
                     "lang",
                     "state",
                     "two_auth_enabled",
+                    "state_data",
                 )
             },
         ),
-        ("Important dates", {"fields": ("date_created", "date_updated")}),
+        ("Date information", {"fields": ("date_created", "date_updated"), "classes": ("collapse",)},),
     )

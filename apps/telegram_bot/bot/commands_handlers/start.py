@@ -61,6 +61,7 @@ class StartHandler:
     def start_reply_keyboard():
         return ReplyKeyboardMarkup([
             [
-                KeyboardButton(str(_('tg_bot_keyboard_button_catalog')))
+                KeyboardButton(str(_('tg_bot_keyboard_button_catalog'))),
+                KeyboardButton(str(_('tg_bot_keyboard_button_support')))
             ],
         ], resize_keyboard=True)

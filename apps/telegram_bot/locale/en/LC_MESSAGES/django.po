@@ -24,6 +24,18 @@ msgstr "Two-factor authentication is not enabled.\n"
 "<code>{code}</code>\n\n"
 "If you have already enabled two-factor authentication, enter the code in the following message."
 
+msgid "tg_bot_support_title"
+msgstr "Write your title of ticket"
+
+msgid "tg_bot_support_description"
+msgstr "Write your description of ticket"
+
+msgid "tg_bot_support_two_auth"
+msgstr "Two-factor authentication"
+
+msgid "tg_bot_ticket_created"
+msgstr "Your ticket has been created"
+
 msgid "tg_bot_greeting"
 msgstr "Welcome"
 
@@ -32,6 +44,9 @@ msgstr "Wrong code"
 
 msgid "tg_bot_two_auth_enabled"
 msgstr "Two-factor authentication is enabled"
+
+msgid "tg_bot_keyboard_button_support"
+msgstr "Write to support"
 
 msgid "tg_bot_unknown_command"
 msgstr "Unknown command"
