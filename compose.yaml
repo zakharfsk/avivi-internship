@@ -20,6 +20,32 @@ services:
     depends_on:
       - postgres
 
+  celery:
+    container_name: celery
+    restart: always
+    build: .
+    entrypoint: '/app/entrypoints/celery-entrypoint.sh'
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+
+  celery_beat:
+    container_name: celery_beat
+    restart: always
+    build: .
+    entrypoint: '/app/entrypoints/celery-beat-entrypoint.sh'
+    volumes:
+      - ./:/app
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+
   postgres:
     image: postgres:latest
     container_name: postgres
@@ -50,7 +76,7 @@ services:
   serveo:
     image: jacobtomlinson/serveo:latest
     container_name: serveo
-    entrypoint: "/app/serveo-entrypoint.sh"
+    entrypoint: "/app/entrypoints/serveo-entrypoint.sh"
     command: "echo -e 'y' | ssh-keygen -q -t rsa -N '' -f ~/.ssh/id_rsa > /dev/null 2>&1"
     volumes:
       - ./:/app

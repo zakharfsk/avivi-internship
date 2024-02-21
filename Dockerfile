@@ -37,8 +37,8 @@ COPY . .
 # Expose the port that the application listens on.
 EXPOSE 8000
 
-ADD docker-entrypoint.sh /docker-entrypoint.sh
+ADD entrypoints/docker-entrypoint.sh /docker-entrypoint.sh
 
-RUN chmod a+x /docker-entrypoint.sh
+RUN chmod a+x entrypoints/docker-entrypoint.sh
 
-ENTRYPOINT ["bash", "-e", "/docker-entrypoint.sh"]
+ENTRYPOINT ["bash", "-e", "entrypoints/docker-entrypoint.sh"]
