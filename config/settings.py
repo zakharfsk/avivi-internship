@@ -11,8 +11,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+
 from environs import Env
 from django.utils.translation import gettext_lazy as _
+from pytz import timezone
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -105,6 +107,13 @@ DATABASES = {
         'PORT': env.int('DATABASE_PORT'),
     }
 }
+
+CELERY_BROKER_URL = env.str('CELERY_DATABASE_URL') #'redis://demo_app_redis:6379'
+CELERY_RESULT_BACKEND = env.str('CELERY_DATABASE_URL') #'redis://demo_app_redis:6379'
+CELERY_TIMEZONE = timezone('Europe/Kiev')
+CELERY_ENABLE_UTC = True
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
