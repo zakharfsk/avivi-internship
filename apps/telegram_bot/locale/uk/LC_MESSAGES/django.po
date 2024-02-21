@@ -27,6 +27,41 @@ msgstr "Двофакторна автентифікація не включен�
 "<code>{code}</code>\n\n"
 "Якщо ви вже ввімкнули двофакторну автентифікацію, введіть код наступним повідомленням."
 
+#: .\bot\text_handlers\schedule_handler.py:15
+msgid "year"
+msgstr "рік"
+
+#: .\bot\text_handlers\schedule_handler.py:15
+msgid "month"
+msgstr "місяць"
+
+#: .\bot\text_handlers\schedule_handler.py:15
+msgid "day"
+msgstr "день"
+
+#: .\bot\text_handlers\schedule_handler.py:29
+#: .\bot\text_handlers\schedule_handler.py:40
+msgid "tg_bot_schedule_date"
+msgstr "Виберіть {step}"
+
+#: .\bot\text_handlers\schedule_handler.py:51
+msgid "tg_bot_schedule_time"
+msgstr "Ви вибрали {date}. Введіть час в форматі HH:MM"
+
+#: .\bot\text_handlers\schedule_handler.py:64
+msgid "tg_bot_invalid_time_format"
+msgstr "Невірний формат часу. Введіть час в форматі HH:MM"
+
+#: .\bot\text_handlers\schedule_handler.py:72
+msgid "tg_bot_schedule_text"
+msgstr "Введіть текст нагадування"
+
+#: .\bot\text_handlers\schedule_handler.py:81
+msgid "tg_bot_schedule_created"
+msgstr "Нагадування створено\n"
+"Дата: {date} в {time}\n"
+"Текст нагадування: {text}"
+
 msgid "tg_bot_keyboard_button_set_schedule"
 msgstr "Додати нагадування"
 
