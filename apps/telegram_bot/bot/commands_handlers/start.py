@@ -66,5 +66,6 @@ class StartHandler:
             ],
             [
                 KeyboardButton(str(_('tg_bot_keyboard_button_set_schedule'))),
+                KeyboardButton(str(_('tg_bot_keyboard_button_download_user_tickets')))
             ]
         ], resize_keyboard=True)

@@ -20,6 +20,16 @@ services:
     depends_on:
       - postgres
 
+  wkhtmltopdf:
+    container_name: wkhtmltopdf
+    image: traumfewo/docker-wkhtmltopdf-aas
+    environment:
+      USER: ${WKHTMLTOPDF_USER}
+      PASS: ${WKHTMLTOPDF_PASS}
+    env_file: .env
+    ports:
+      - "8080:5555"
+
   celery:
     container_name: celery
     restart: always
