@@ -3,8 +3,8 @@
 echo "Migrate..."
 python manage.py migrate --noinput &&
 
-#echo "Compile messages..."
-#django-admin compilemessages &&
+echo "Compile messages..."
+django-admin compilemessages &&
 
 echo "Collect static files..."
 python manage.py collectstatic --noinput &&

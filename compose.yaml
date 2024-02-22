@@ -78,7 +78,7 @@ services:
     volumes:
       - ./nginx-conf.d:/etc/nginx/conf.d
       - ./static:/app/static
-      - media:/app/media
+      - ./media:/app/media
     depends_on:
       - server
     restart: unless-stopped
