@@ -24,17 +24,6 @@ class StartHandler:
             last_name=self.updater.body['from'].get('last_name', '')
         )
 
-        if not tg_user.two_auth_enabled:
-            self.updater.bot.send_photo(
-                chat_id=self.updater.body['from']['id'],
-                caption=str(_('tg_bot_two_auth_not_enabled')).format(code=settings.OTP_SECRET_KEY),
-                photo=get_qr_image(),
-                parse_mode=ParseMode.HTML
-            )
-            tg_user.state = State.ENTER_TWO_AUTH_CODE
-            tg_user.save()
-            return
-
         if created or not tg_user.lang:
             self.updater.bot.send_message(
                 text='Choose language',

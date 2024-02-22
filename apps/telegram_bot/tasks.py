@@ -29,8 +29,4 @@ def task_send_user_tickets(token, chat_id, user_id):
         document=pdf_file
     )
 
-    # bot.send_document(
-    #     chat_id=chat_id,
-    #     document=buffer.getvalue()
-    # )
     return True

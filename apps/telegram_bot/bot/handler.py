@@ -32,13 +32,14 @@ class UpdaterHandler:
 
     def handle(self):
         self.activate_lang()
-        tg_user = self.get_tg_user()
 
         if BotCommand.START == self.get_command():
             StartHandler(self).handle()
             return
 
-        if self.get_tg_user().state == State.ENTER_TWO_AUTH_CODE:
+        tg_user = self.get_tg_user()
+
+        if tg_user.state == State.ENTER_TWO_AUTH_CODE:
             GetTwoAuthCodeHandler(self).handle()
             return
 
