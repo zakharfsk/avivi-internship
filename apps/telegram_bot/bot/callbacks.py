@@ -7,4 +7,4 @@ class TypeCallBacks:
     SHOW_PRODUCT_BY_CAT_ID: str = "show_product_by_cat_id"
     LIST_CATEGORIES_CHANGE_PAGE: str = "list_categories_change_page"
 
-
+    CALENDAR_CALLBACK = 'cbcal'

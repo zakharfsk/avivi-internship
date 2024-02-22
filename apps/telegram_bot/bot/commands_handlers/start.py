@@ -64,4 +64,7 @@ class StartHandler:
                 KeyboardButton(str(_('tg_bot_keyboard_button_catalog'))),
                 KeyboardButton(str(_('tg_bot_keyboard_button_support')))
             ],
+            [
+                KeyboardButton(str(_('tg_bot_keyboard_button_set_schedule'))),
+            ]
         ], resize_keyboard=True)

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-19 17:19+0200\n"
+"POT-Creation-Date: 2024-02-21 15:38+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,47 +18,103 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: .\bot\callbacks_handlers\setlang_callback.py:33
+#: .\bot\commands_handlers\start.py:47
+msgid "tg_bot_greeting"
+msgstr "Welcome"
+
+#: .\bot\callbacks_handlers\setlang_callback.py:40
+#: .\bot\commands_handlers\start.py:30
 msgid "tg_bot_two_auth_not_enabled"
-msgstr "Two-factor authentication is not enabled.\n"
+msgstr ""
+"Two-factor authentication is not enabled.\n"
 "Please connect using qr code or code above:\n"
-"<code>{code}</code>\n\n"
-"If you have already enabled two-factor authentication, enter the code in the following message."
+"<code>{code}</code>\n"
+"\n"
+"If you have already enabled two-factor authentication, enter the code in the "
+"following message."
+
+#: .\bot\commands_handlers\start.py:64
+msgid "tg_bot_keyboard_button_catalog"
+msgstr "Catalog"
+
+#: .\bot\commands_handlers\start.py:65
+msgid "tg_bot_keyboard_button_support"
+msgstr "Write to support"
+
+#: .\bot\commands_handlers\start.py:68
+msgid "tg_bot_keyboard_button_set_schedule"
+msgstr "Add a reminder"
+
+#: .\bot\states_handler\enter_two_code_state.py:19
+#: .\bot\text_handlers\support_handler.py:55
+msgid "tg_bot_wrong_code"
+msgstr "Wrong code"
+
+#: .\bot\states_handler\enter_two_code_state.py:30
+msgid "tg_bot_two_auth_enabled"
+msgstr "Two-factor authentication is enabled"
+
+#: .\bot\text_handlers\catalog_handler.py:21
+msgid "tg_bot_category_list"
+msgstr "Choose a category"
+
+#: .\bot\text_handlers\catalog_handler.py:39
+msgid "tg_bot_product_list"
+msgstr "All products"
+
+#: .\bot\text_handlers\schedule_handler.py:15
+msgid "year"
+msgstr "year"
+
+#: .\bot\text_handlers\schedule_handler.py:15
+msgid "month"
+msgstr "month"
+
+#: .\bot\text_handlers\schedule_handler.py:15
+msgid "day"
+msgstr "day"
+
+#: .\bot\text_handlers\schedule_handler.py:29
+#: .\bot\text_handlers\schedule_handler.py:40
+msgid "tg_bot_schedule_date"
+msgstr "Select {step}"
+
+#: .\bot\text_handlers\schedule_handler.py:51
+msgid "tg_bot_schedule_time"
+msgstr "You selected {date}, now send time in format HH:MM"
+
+#: .\bot\text_handlers\schedule_handler.py:64
+msgid "tg_bot_invalid_time_format"
+msgstr "Invalid time format, please send time in format HH:MM"
+
+#: .\bot\text_handlers\schedule_handler.py:72
+msgid "tg_bot_schedule_text"
+msgstr "Send text for schedule task"
+
+#: .\bot\text_handlers\schedule_handler.py:81
+msgid "tg_bot_schedule_created"
+msgstr "Your schedule is set\n"
+"Time: {date} at {time}\n"
+"Text: {text}"
 
 msgid "tg_bot_support_title"
 msgstr "Write your title of ticket"
 
+#: .\bot\text_handlers\support_handler.py:32
 msgid "tg_bot_support_description"
 msgstr "Write your description of ticket"
 
+#: .\bot\text_handlers\support_handler.py:44
 msgid "tg_bot_support_two_auth"
 msgstr "Two-factor authentication"
 
+#: .\bot\text_handlers\support_handler.py:62
 msgid "tg_bot_ticket_created"
 msgstr "Your ticket has been created"
 
-msgid "tg_bot_greeting"
-msgstr "Welcome"
-
-msgid "tg_bot_wrong_code"
-msgstr "Wrong code"
-
-msgid "tg_bot_two_auth_enabled"
-msgstr "Two-factor authentication is enabled"
-
-msgid "tg_bot_keyboard_button_support"
-msgstr "Write to support"
-
 msgid "tg_bot_unknown_command"
 msgstr "Unknown command"
-
-msgid "tg_bot_keyboard_button_catalog"
-msgstr "Catalog"
-
-msgid "tg_bot_category_list"
-msgstr "Choose a category"
-
-msgid "tg_bot_product_list"
-msgstr "All products"
 
 msgid "tg_bot_product_price"
 msgstr "Price"
