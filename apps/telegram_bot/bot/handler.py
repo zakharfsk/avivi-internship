@@ -12,6 +12,7 @@ from apps.telegram_bot.bot.states import State
 from apps.telegram_bot.bot.states_handler.enter_two_code_state import GetTwoAuthCodeHandler
 from apps.telegram_bot.bot.text_commands import KeyboardTextCommand
 from apps.telegram_bot.bot.text_handlers.catalog_handler import CatalogHandler
+from apps.telegram_bot.bot.text_handlers.download_user_tickets import DownloadUserTickets
 from apps.telegram_bot.bot.text_handlers.schedule_handler import ScheduleHandler
 from apps.telegram_bot.bot.text_handlers.support_handler import SupportHandler
 from apps.user.models import TelegramUser
@@ -31,13 +32,14 @@ class UpdaterHandler:
 
     def handle(self):
         self.activate_lang()
-        tg_user = self.get_tg_user()
 
         if BotCommand.START == self.get_command():
             StartHandler(self).handle()
             return
 
-        if self.get_tg_user().state == State.ENTER_TWO_AUTH_CODE:
+        tg_user = self.get_tg_user()
+
+        if tg_user.state == State.ENTER_TWO_AUTH_CODE:
             GetTwoAuthCodeHandler(self).handle()
             return
 
@@ -90,6 +92,9 @@ class UpdaterHandler:
 
         if self.body.get('text') == str(_(KeyboardTextCommand.SET_SCHEDULE)):
             ScheduleHandler(self).handle()
+
+        if self.body.get('text') == str(_(KeyboardTextCommand.DOWNLOAD_USER_TICKETS)):
+            DownloadUserTickets(self).handle()
 
     def activate_lang(self):
         tg_user = TelegramUser.objects.filter(
